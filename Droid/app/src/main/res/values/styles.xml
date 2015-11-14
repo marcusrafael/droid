@@ -1,0 +1,30 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppThemeBB8" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimaryBB8</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkBB8</item>
+        <item name="colorAccent">@color/colorAccentBB8</item>
+    </style>
+
+    <style name="AppThemeR2D2" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimaryR2D2</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkR2D2</item>
+        <item name="colorAccent">@color/colorAccentR2D2</item>
+    </style>
+
+    <style name="AppThemeBB8.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="AppThemeR2D2.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+</resources>

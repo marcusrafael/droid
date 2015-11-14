@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimaryDarkBB8">#000000</color>
+    <color name="colorPrimaryBB8">#ff9800</color>
+    <color name="colorAccentBB8">#f44336</color>
+
+    <color name="colorPrimaryDarkR2D2">#000000</color>
+    <color name="colorPrimaryR2D2">#303F9F</color>
+    <color name="colorAccentR2D2">#f44336</color>
+
+</resources>
