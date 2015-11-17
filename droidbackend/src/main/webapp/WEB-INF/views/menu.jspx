@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:menu="urn:jsptagdir:/WEB-INF/tags/menu" id="menu" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <menu:menu id="_menu" z="nZaf43BjUg1iM0v70HJVEsXDopc=">
+        <menu:category id="c_challenge" z="WwtPos1+dPGo/hSL5I+WXR0orJ8=">
+            <menu:item id="i_challenge_new" messageCode="global_menu_new" url="/challenges?form" z="oN1rSqB466vFXaUaeHYLJE3ISEg="/>
+            <menu:item id="i_challenge_list" messageCode="global_menu_list" url="/challenges?page=1&amp;size=${empty param.size ? 10 : param.size}" z="JuvLtN3cfBfSg/4TBW/W6Hg5+LE="/>
+        </menu:category>
+        <menu:category id="c_location" z="RvMgx8apsPylYygCQ4tMBVfulVw=">
+            <menu:item id="i_location_new" messageCode="global_menu_new" url="/locations?form" z="sW8KSnwNnd9wjssI0lLV1kzOguk="/>
+            <menu:item id="i_location_list" messageCode="global_menu_list" url="/locations?page=1&amp;size=${empty param.size ? 10 : param.size}" z="VdKLEljpeTLil2W6A3GdWmSBzXI="/>
+        </menu:category>
+        <menu:category id="c_answer" z="VRJUL2DPcEjOdfnKKe/ixAXkXks=">
+            <menu:item id="i_answer_new" messageCode="global_menu_new" url="/answers?form" z="LPAHG1ylis2IM0UMQllr03koJ9U="/>
+            <menu:item id="i_answer_list" messageCode="global_menu_list" url="/answers?page=1&amp;size=${empty param.size ? 10 : param.size}" z="dL/ZrqAaVZpavp9JjLYkQvniPLo="/>
+        </menu:category>
+    </menu:menu>
+</div>

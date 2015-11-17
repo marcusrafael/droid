@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_br_ufpb_ccae_dcx_lcc_tcc_model_Answer" object="${answer}" path="/answers" z="N3RiKZqkU3FDi41XymYu5r2SjcA=">
+        <field:display field="correct" id="s_br_ufpb_ccae_dcx_lcc_tcc_model_Answer_correct" object="${answer}" z="Sws/lkbCeaO5G84INMmKIt9NI2k="/>
+        <field:display field="description" id="s_br_ufpb_ccae_dcx_lcc_tcc_model_Answer_description" object="${answer}" z="EaXfj7tiamQ1xc3YRJMHt0sJzbE="/>
+        <field:display field="challenge" id="s_br_ufpb_ccae_dcx_lcc_tcc_model_Answer_challenge" object="${answer}" z="IxT8EvfMMwxQi0uL4kkkklmIFiE="/>
+    </page:show>
+</div>

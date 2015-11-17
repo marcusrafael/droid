@@ -1,0 +1,46 @@
+// Spring Roo 1.3.2.RELEASE [rev 8387857] log opened at 2015-11-16 22:06:43
+project --topLevelPackage br.ufpb.ccae.dcx.lcc.tcc --projectName droidbackend --java 7 --packaging WAR
+// Spring Roo 1.3.2.RELEASE [rev 8387857] log opened at 2015-11-16 22:07:27
+persistence setup --provider HIBERNATE --database MYSQL
+
+entity jpa --class ~.model.Challenge
+
+field string --fieldName challenge --notNull
+
+entity jpa --class ~.model.Location
+
+field string --fieldName description --notNull
+
+field number --type double --fieldName latitude
+
+field number --type double --fieldName longitude
+
+field number --type double --fieldName radius
+
+entity jpa --class ~.model.Answer
+
+field boolean --fieldName correct
+
+field string --fieldName answer --notNull
+
+hint
+help
+web mvc setup
+web mvc all --package ~.controllers
+json all
+persistence setup --provider HIBERNATE --database MYSQL --databaseName droidbackend --userName root --password !#X4v13r
+persistence setup --provider HIBERNATE --database MYSQL --databaseName droidbackend --userName root --password !#X4v13r
+    json all
+
+json all
+
+web mvc json all
+web mvc json all --package ~.controllers
+web mvc json all
+json all
+focus --class ~.model.Challenge
+field  reference --fieldName location --type ~.model.Location
+
+focus --class ~.model.Answer
+field  reference --fieldName challenge --type ~.model.Challenge
+
