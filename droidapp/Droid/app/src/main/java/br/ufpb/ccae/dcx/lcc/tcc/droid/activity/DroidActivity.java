@@ -1,7 +1,8 @@
 package br.ufpb.ccae.dcx.lcc.tcc.droid.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,29 +13,27 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import br.ufpb.ccae.dcx.lcc.tcc.R;
+import br.ufpb.ccae.dcx.lcc.tcc.droid.R;
+import br.ufpb.ccae.dcx.lcc.tcc.droid.fragment.AboutFragment;
+import br.ufpb.ccae.dcx.lcc.tcc.droid.fragment.ChallengeFragment;
+import br.ufpb.ccae.dcx.lcc.tcc.droid.fragment.MapFragment;
+import br.ufpb.ccae.dcx.lcc.tcc.droid.persistence.InitialData;
 
 public class DroidActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    private FragmentTransaction fragmentTransaction;
+    private static Fragment current = new ChallengeFragment();
+
     private Toolbar mToolBar;
-    private FloatingActionButton mFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        InitialData.loadInitialData(this);
         setContentView(R.layout.activity_droid);
 
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolBar);
-
-        mFab = (FloatingActionButton) findViewById(R.id.fab);
-        mFab.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -44,6 +43,11 @@ public class DroidActivity extends AppCompatActivity implements NavigationView.O
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, current);
+        fragmentTransaction.commit();
+
     }
 
     @Override
@@ -65,41 +69,37 @@ public class DroidActivity extends AppCompatActivity implements NavigationView.O
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+
         int id = item.getItemId();
-
-        if (id == R.id.nav_camara) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.nav_challenge) {
+            current = new ChallengeFragment();
+        } else if (id == R.id.nav_map) {
+            current = new MapFragment();
+        } else if (id == R.id.nav_about) {
+            current = new AboutFragment();
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, current);
+        fragmentTransaction.commit();
         return true;
     }
 }
