@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.stmt.QueryBuilder;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -66,5 +67,20 @@ public class DatabaseFacade {
             return answers;
         }
         return answers;
+    }
+
+    public List<Challenge> getChallengesByLatLong(double latitude, double longitude) {
+        List<Challenge> challenges = new ArrayList<>();
+        try {
+            Dao<Challenge, String> challengeDAO = DaoManager.createDao(databaseHelper.getConnectionSource(), Challenge.class);
+            Dao<Location, String> locationDAO = DaoManager.createDao(databaseHelper.getConnectionSource(), Location.class);
+            QueryBuilder<Location, String> locationQueryBuilder = locationDAO.queryBuilder();
+            QueryBuilder<Challenge, String> challengeQueryBuilder = challengeDAO.queryBuilder();
+            locationQueryBuilder.where().eq("latitude", latitude).and().eq("longitude", longitude);
+            challenges = challengeQueryBuilder.join(locationQueryBuilder).query();
+        } catch (SQLException e) {
+            return challenges;
+        }
+        return challenges;
     }
 }

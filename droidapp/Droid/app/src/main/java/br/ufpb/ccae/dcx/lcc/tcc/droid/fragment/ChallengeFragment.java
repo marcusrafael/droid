@@ -17,6 +17,7 @@ import java.util.List;
 
 import br.ufpb.ccae.dcx.lcc.tcc.droid.R;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.activity.ChallengeActivity;
+import br.ufpb.ccae.dcx.lcc.tcc.droid.adapt.LocationAdaptation;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.adapter.ChallengeAdapter;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.model.Challenge;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.model.Location;
@@ -28,10 +29,7 @@ public class ChallengeFragment extends Fragment implements RecyclerViewOnClickLi
 
     private RecyclerView mRecyclerView;
     private ChallengeAdapter mChallengeAdapter;
-    private List<Challenge> challenges = new ArrayList<>();
-    private FloatingActionButton mFab;
-
-    public static List<Location> locations = new ArrayList<>();
+    private LocationAdaptation locationAdaptation;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,13 +44,20 @@ public class ChallengeFragment extends Fragment implements RecyclerViewOnClickLi
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
 
-        this.challenges = DatabaseFacade.getInstance(getContext()).getAllChallenges();
-
-        mChallengeAdapter = new ChallengeAdapter(getActivity(), challenges);
+        mChallengeAdapter = new ChallengeAdapter(getActivity(), LocationAdaptation.challenges);
         mRecyclerView.setAdapter(mChallengeAdapter);
         mChallengeAdapter.setRecyclerViewOnClickListener(this);
 
+        locationAdaptation = new LocationAdaptation(getActivity());
+        locationAdaptation.connect();
+        
         return view;
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
     }
 
@@ -60,7 +65,7 @@ public class ChallengeFragment extends Fragment implements RecyclerViewOnClickLi
     public void onClickListener(View view, int position) {
 
         Intent intent = new Intent(getActivity(), ChallengeActivity.class);
-        intent.putExtra("CHALLENGE", challenges.get(position));
+        intent.putExtra("CHALLENGE", LocationAdaptation.challenges.get(position));
         startActivity(intent);
 
     }
