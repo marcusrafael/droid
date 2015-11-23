@@ -1,5 +1,7 @@
 package br.ufpb.ccae.dcx.lcc.tcc.droid.activity;
 
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
@@ -18,6 +20,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import java.util.List;
 
 import br.ufpb.ccae.dcx.lcc.tcc.droid.R;
+import br.ufpb.ccae.dcx.lcc.tcc.droid.adapt.BatteryAdaptation;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.model.Answer;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.model.Challenge;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.persistence.DatabaseFacade;
@@ -39,6 +42,11 @@ public class ChallengeActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        BatteryAdaptation batteryAdaptation = new BatteryAdaptation();
+        this.registerReceiver(batteryAdaptation, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+
+
         setContentView(R.layout.activity_challenge);
 
         ActionBar actionBar = getSupportActionBar();

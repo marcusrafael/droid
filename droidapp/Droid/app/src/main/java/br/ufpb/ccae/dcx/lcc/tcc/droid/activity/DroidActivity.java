@@ -1,5 +1,7 @@
 package br.ufpb.ccae.dcx.lcc.tcc.droid.activity;
 
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -14,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import br.ufpb.ccae.dcx.lcc.tcc.droid.R;
+import br.ufpb.ccae.dcx.lcc.tcc.droid.adapt.BatteryAdaptation;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.fragment.AboutFragment;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.fragment.ChallengeFragment;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.fragment.MapFragment;
@@ -23,6 +26,7 @@ public class DroidActivity extends AppCompatActivity implements NavigationView.O
 
     private FragmentTransaction fragmentTransaction;
     private static Fragment current = new ChallengeFragment();
+    BatteryAdaptation batteryAdaptation = new BatteryAdaptation();
 
     private Toolbar mToolBar;
 
@@ -47,6 +51,8 @@ public class DroidActivity extends AppCompatActivity implements NavigationView.O
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, current);
         fragmentTransaction.commit();
+
+        this.registerReceiver(batteryAdaptation, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
     }
 
