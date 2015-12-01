@@ -3,10 +3,20 @@
 
 package br.ufpb.ccae.dcx.lcc.tcc.model;
 
+import br.ufpb.ccae.dcx.lcc.tcc.model.Answer;
 import br.ufpb.ccae.dcx.lcc.tcc.model.Challenge;
 import br.ufpb.ccae.dcx.lcc.tcc.model.Location;
+import java.util.Set;
 
 privileged aspect Challenge_Roo_JavaBean {
+    
+    public Set<Answer> Challenge.getAnswers() {
+        return this.answers;
+    }
+    
+    public void Challenge.setAnswers(Set<Answer> answers) {
+        this.answers = answers;
+    }
     
     public String Challenge.getDescription() {
         return this.description;
@@ -22,6 +32,14 @@ privileged aspect Challenge_Roo_JavaBean {
     
     public void Challenge.setLocation(Location location) {
         this.location = location;
+    }
+    
+    public String Challenge.getDifficulty() {
+        return this.difficulty;
+    }
+    
+    public void Challenge.setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
     }
     
 }

@@ -14,7 +14,7 @@ privileged aspect Challenge_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager Challenge.entityManager;
     
-    public static final List<String> Challenge.fieldNames4OrderClauseFilter = java.util.Arrays.asList("description", "location");
+    public static final List<String> Challenge.fieldNames4OrderClauseFilter = java.util.Arrays.asList("answers", "description", "location", "difficulty");
     
     public static final EntityManager Challenge.entityManager() {
         EntityManager em = new Challenge().entityManager;

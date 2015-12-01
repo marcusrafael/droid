@@ -6,6 +6,7 @@
         <table:table data="${challenges}" id="l_br_ufpb_ccae_dcx_lcc_tcc_model_Challenge" path="/challenges" z="G2KRn0lv47V4xLDPLcj1KsaZSJw=">
             <table:column id="c_br_ufpb_ccae_dcx_lcc_tcc_model_Challenge_description" property="description" z="TXfuSP0rPrUu4/h0GYtxKsKU39c="/>
             <table:column id="c_br_ufpb_ccae_dcx_lcc_tcc_model_Challenge_location" property="location" z="pE46411rdSRwFOl8ca1dIwx7xU8="/>
+            <table:column id="c_br_ufpb_ccae_dcx_lcc_tcc_model_Challenge_difficulty" property="difficulty" z="WVhOAwNNGLxxiNiz4zSXneNkHl8="/>
         </table:table>
     </page:list>
 </div>

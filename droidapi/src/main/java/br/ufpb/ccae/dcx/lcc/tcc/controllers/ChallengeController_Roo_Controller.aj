@@ -4,6 +4,7 @@
 package br.ufpb.ccae.dcx.lcc.tcc.controllers;
 
 import br.ufpb.ccae.dcx.lcc.tcc.controllers.ChallengeController;
+import br.ufpb.ccae.dcx.lcc.tcc.model.Answer;
 import br.ufpb.ccae.dcx.lcc.tcc.model.Challenge;
 import br.ufpb.ccae.dcx.lcc.tcc.model.Location;
 import java.io.UnsupportedEncodingException;
@@ -87,6 +88,7 @@ privileged aspect ChallengeController_Roo_Controller {
     
     void ChallengeController.populateEditForm(Model uiModel, Challenge challenge) {
         uiModel.addAttribute("challenge", challenge);
+        uiModel.addAttribute("answers", Answer.findAllAnswers());
         uiModel.addAttribute("locations", Location.findAllLocations());
     }
     

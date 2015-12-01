@@ -3,9 +3,19 @@
 
 package br.ufpb.ccae.dcx.lcc.tcc.model;
 
+import br.ufpb.ccae.dcx.lcc.tcc.model.Challenge;
 import br.ufpb.ccae.dcx.lcc.tcc.model.Location;
+import java.util.Set;
 
 privileged aspect Location_Roo_JavaBean {
+    
+    public Set<Challenge> Location.getChallenges() {
+        return this.challenges;
+    }
+    
+    public void Location.setChallenges(Set<Challenge> challenges) {
+        this.challenges = challenges;
+    }
     
     public String Location.getDescription() {
         return this.description;

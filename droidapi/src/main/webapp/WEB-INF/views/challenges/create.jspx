@@ -5,6 +5,8 @@
     <form:create id="fc_br_ufpb_ccae_dcx_lcc_tcc_model_Challenge" modelAttribute="challenge" path="/challenges" render="${empty dependencies}" z="wwLxVX37s9c25opSYp5vq5GRpyM=">
         <field:input field="description" id="c_br_ufpb_ccae_dcx_lcc_tcc_model_Challenge_description" required="true" z="1DR9lrxQ68rtGomebZUqmaTNgPc="/>
         <field:select field="location" id="c_br_ufpb_ccae_dcx_lcc_tcc_model_Challenge_location" itemValue="id" items="${locations}" path="/locations" z="w+6TRXPCef9F4HxgHqR3CT00VoE="/>
+        <field:input field="difficulty" id="c_br_ufpb_ccae_dcx_lcc_tcc_model_Challenge_difficulty" required="true" z="cglbkEFRqnZlaWroyTSjNlMFRjs="/>
+        <field:simple field="answers" id="c_br_ufpb_ccae_dcx_lcc_tcc_model_Challenge_answers" messageCode="entity_reference_not_managed" messageCodeAttribute="Answer" z="kEjhpI1DZ3HZkCo5B10W5UnPYWA="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_br_ufpb_ccae_dcx_lcc_tcc_model_Challenge" render="${not empty dependencies}" z="WORHreWSxJHLfph7yCXliisUHxU="/>
 </div>

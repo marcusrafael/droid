@@ -42,7 +42,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Challenge, String> ApplicationConversionServiceFactoryBean.getChallengeToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<br.ufpb.ccae.dcx.lcc.tcc.model.Challenge, java.lang.String>() {
             public String convert(Challenge challenge) {
-                return new StringBuilder().append(challenge.getDescription()).toString();
+                return new StringBuilder().append(challenge.getDescription()).append(' ').append(challenge.getDifficulty()).toString();
             }
         };
     }

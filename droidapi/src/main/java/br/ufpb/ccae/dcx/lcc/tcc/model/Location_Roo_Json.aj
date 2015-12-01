@@ -14,12 +14,12 @@ privileged aspect Location_Roo_Json {
     
     public String Location.toJson() {
         return new JSONSerializer()
-        .exclude("*.class").serialize(this);
+        .exclude("*.class").deepSerialize(this);
     }
     
     public String Location.toJson(String[] fields) {
         return new JSONSerializer()
-        .include(fields).exclude("*.class").serialize(this);
+        .include(fields).exclude("*.class").deepSerialize(this);
     }
     
     public static Location Location.fromJsonToLocation(String json) {
@@ -29,12 +29,12 @@ privileged aspect Location_Roo_Json {
     
     public static String Location.toJsonArray(Collection<Location> collection) {
         return new JSONSerializer()
-        .exclude("*.class").serialize(collection);
+        .exclude("*.class").deepSerialize(collection);
     }
     
     public static String Location.toJsonArray(Collection<Location> collection, String[] fields) {
         return new JSONSerializer()
-        .include(fields).exclude("*.class").serialize(collection);
+        .include(fields).exclude("*.class").deepSerialize(collection);
     }
     
     public static Collection<Location> Location.fromJsonArrayToLocations(String json) {

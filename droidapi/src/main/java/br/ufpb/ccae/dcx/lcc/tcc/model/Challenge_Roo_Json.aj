@@ -14,12 +14,12 @@ privileged aspect Challenge_Roo_Json {
     
     public String Challenge.toJson() {
         return new JSONSerializer()
-        .exclude("*.class").serialize(this);
+        .exclude("*.class").deepSerialize(this);
     }
     
     public String Challenge.toJson(String[] fields) {
         return new JSONSerializer()
-        .include(fields).exclude("*.class").serialize(this);
+        .include(fields).exclude("*.class").deepSerialize(this);
     }
     
     public static Challenge Challenge.fromJsonToChallenge(String json) {
@@ -29,12 +29,12 @@ privileged aspect Challenge_Roo_Json {
     
     public static String Challenge.toJsonArray(Collection<Challenge> collection) {
         return new JSONSerializer()
-        .exclude("*.class").serialize(collection);
+        .exclude("*.class").deepSerialize(collection);
     }
     
     public static String Challenge.toJsonArray(Collection<Challenge> collection, String[] fields) {
         return new JSONSerializer()
-        .include(fields).exclude("*.class").serialize(collection);
+        .include(fields).exclude("*.class").deepSerialize(collection);
     }
     
     public static Collection<Challenge> Challenge.fromJsonArrayToChallenges(String json) {

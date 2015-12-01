@@ -53,3 +53,24 @@ field  reference --fieldName challenge --type ~.model.Challenge
 // Spring Roo 1.3.2.RELEASE [rev 8387857] log closed at 2015-11-17 20:53:22
 // Spring Roo 1.3.2.RELEASE [rev 8387857] log opened at 2015-11-17 20:59:33
 // Spring Roo 1.3.2.RELEASE [rev 8387857] log closed at 2015-11-17 21:03:07
+// Spring Roo 1.3.2.RELEASE [rev 8387857] log opened at 2015-11-25 23:48:23
+focus --class ~.model.Challenge
+// [failed] field string --fieldName level --notNull
+
+field string --fieldName difficulty --notNull
+
+// Spring Roo 1.3.2.RELEASE [rev 8387857] log closed at 2015-11-28 22:17:52
+// Spring Roo 1.3.2.RELEASE [rev 8387857] log opened at 2015-11-29 01:07:54
+// Spring Roo 1.3.2.RELEASE [rev 8387857] log opened at 2015-11-29 13:51:12
+focus --class ~.model.Location
+field set --fieldName challenges --type ~.model.Challenge --cardinality ONE_TO_MANY --mappedBy challenges 
+focus --class ~.model.Challenge
+focus --class ~.model.Challenge
+field set --fieldName answers --type ~.model.Answer --cardinality ONE_TO_MANY --mappedBy answers
+web mvc all --package ~.controller
+json all
+web mvc json all 
+web mvc json all
+web mvc json all --package ~.controller
+web mvc json all --package ~.model
+web mvc json all --package ~.json 

@@ -14,7 +14,7 @@ privileged aspect Location_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager Location.entityManager;
     
-    public static final List<String> Location.fieldNames4OrderClauseFilter = java.util.Arrays.asList("description", "latitude", "longitude", "radius");
+    public static final List<String> Location.fieldNames4OrderClauseFilter = java.util.Arrays.asList("challenges", "description", "latitude", "longitude", "radius");
     
     public static final EntityManager Location.entityManager() {
         EntityManager em = new Location().entityManager;
