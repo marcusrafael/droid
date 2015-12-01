@@ -1,9 +1,11 @@
 package br.ufpb.ccae.dcx.lcc.tcc.droid.model;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 /**
  * Created by xavier on 10/28/15.
@@ -26,6 +28,9 @@ public class Location implements Serializable {
 
     @DatabaseField
     private double radius;
+
+    @ForeignCollectionField(eager = true, maxEagerForeignCollectionLevel = 1)
+    private Collection<Challenge> challenges;
 
 
     public Location() { }
@@ -69,5 +74,13 @@ public class Location implements Serializable {
 
     public void setRadius(double radius) {
         this.radius = radius;
+    }
+
+    public Collection<Challenge> getChallenges() {
+        return challenges;
+    }
+
+    public void setChallenges(Collection<Challenge> challenges) {
+        this.challenges = challenges;
     }
 }

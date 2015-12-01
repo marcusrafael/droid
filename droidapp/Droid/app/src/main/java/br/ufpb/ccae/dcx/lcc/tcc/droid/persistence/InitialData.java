@@ -6,7 +6,6 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 
 import java.sql.SQLException;
-import java.util.concurrent.ConcurrentHashMap;
 
 import br.ufpb.ccae.dcx.lcc.tcc.droid.model.Answer;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.model.Challenge;
@@ -96,7 +95,7 @@ public class InitialData {
 
                 Challenge c1 = new Challenge();
                 c1.setDescription("Qual a capital do estado de Alagoas?");
-                c1.setLevel(Challenge.EASY);;
+                c1.setDifficulty(Challenge.EASY);;
                 c1.setLocation(maceio);
                 challengeDAO.create(c1);
 
@@ -114,7 +113,7 @@ public class InitialData {
 
                 Challenge c2 = new Challenge();
                 c2.setDescription("Qual a capital do estado da Bahia?");
-                c2.setLevel(Challenge.MEDIUM);
+                c2.setDifficulty(Challenge.MEDIUM);
                 c2.setLocation(salvador);
                 challengeDAO.create(c2);
 
@@ -132,7 +131,7 @@ public class InitialData {
 
                 Challenge c3 = new Challenge();
                 c3.setDescription("Qual a capital do estado do Ceará?");
-                c3.setLevel(Challenge.HARD);
+                c3.setDifficulty(Challenge.HARD);
                 c3.setLocation(fortaleza);
                 challengeDAO.create(c3);
 
@@ -150,7 +149,7 @@ public class InitialData {
 
                 Challenge c4 = new Challenge();
                 c4.setDescription("Qual a capital do estado do Maranhão?");
-                c4.setLevel(Challenge.EASY);
+                c4.setDifficulty(Challenge.EASY);
                 c4.setLocation(saoLuis);
                 challengeDAO.create(c4);
 
@@ -168,7 +167,7 @@ public class InitialData {
 
                 Challenge c5 = new Challenge();
                 c5.setDescription("Qual a capital do estado da Paraíba?");
-                c5.setLevel(Challenge.MEDIUM);
+                c5.setDifficulty(Challenge.MEDIUM);
                 c5.setLocation(joaoPessoa);
                 challengeDAO.create(c5);
 
@@ -186,7 +185,7 @@ public class InitialData {
 
                 Challenge c6 = new Challenge();
                 c6.setDescription("Qual a capital do estado do Piauí?");
-                c6.setLevel(Challenge.HARD);
+                c6.setDifficulty(Challenge.HARD);
                 c6.setLocation(teresina);
                 challengeDAO.create(c6);
 
@@ -204,7 +203,7 @@ public class InitialData {
 
                 Challenge c7 = new Challenge();
                 c7.setDescription("Qual a capital do estado de Pernambuco?");
-                c7.setLevel(Challenge.EASY);
+                c7.setDifficulty(Challenge.EASY);
                 c7.setLocation(recife);
                 challengeDAO.create(c7);
 
@@ -222,7 +221,7 @@ public class InitialData {
 
                 Challenge c8 = new Challenge();
                 c8.setDescription("Qual a capital do estado do Rio Grande do Norte?");
-                c8.setLevel(Challenge.MEDIUM);
+                c8.setDifficulty(Challenge.MEDIUM);
                 c8.setLocation(natal);
                 challengeDAO.create(c8);
 
@@ -240,7 +239,7 @@ public class InitialData {
 
                 Challenge c9 = new Challenge();
                 c9.setDescription("Qual a capital do estado de Sergipe?");
-                c9.setLevel(Challenge.HARD);
+                c9.setDifficulty(Challenge.HARD);
                 c9.setLocation(aracaju);
                 challengeDAO.create(c9);
 

@@ -5,6 +5,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,12 +16,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.List;
+
 import br.ufpb.ccae.dcx.lcc.tcc.droid.R;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.adapt.BatteryAdaptation;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.fragment.AboutFragment;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.fragment.ChallengeFragment;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.fragment.MapFragment;
+import br.ufpb.ccae.dcx.lcc.tcc.droid.model.Location;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.persistence.InitialData;
+import br.ufpb.ccae.dcx.lcc.tcc.droid.persistence.RemoteDatabaseFacade;
 
 public class DroidActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -108,4 +113,5 @@ public class DroidActivity extends AppCompatActivity implements NavigationView.O
         fragmentTransaction.commit();
         return true;
     }
+
 }

@@ -26,13 +26,17 @@ public class Challenge implements Serializable {
     private String description;
 
     @DatabaseField
-    private String level;
+    private String difficulty;
 
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Location location;
 
+    @ForeignCollectionField(eager = true, maxEagerForeignCollectionLevel = 1)
+    private Collection<Answer> answers;
+
 
     public Challenge() { }
+
 
     public long getId() {
         return id;
@@ -50,12 +54,12 @@ public class Challenge implements Serializable {
         this.description = description;
     }
 
-    public String getLevel() {
-        return level;
+    public String getDifficulty() {
+        return difficulty;
     }
 
-    public void setLevel(String level) {
-        this.level = level;
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
     }
 
     public Location getLocation() {
@@ -64,5 +68,13 @@ public class Challenge implements Serializable {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public Collection<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(Collection<Answer> answers) {
+        this.answers = answers;
     }
 }

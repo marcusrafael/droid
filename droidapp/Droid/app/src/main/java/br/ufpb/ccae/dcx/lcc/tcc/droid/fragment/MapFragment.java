@@ -18,7 +18,7 @@ import java.util.List;
 
 import br.ufpb.ccae.dcx.lcc.tcc.droid.R;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.model.Location;
-import br.ufpb.ccae.dcx.lcc.tcc.droid.persistence.DatabaseFacade;
+import br.ufpb.ccae.dcx.lcc.tcc.droid.persistence.LocalDatabaseFacade;
 
 
 public class MapFragment extends Fragment {
@@ -29,8 +29,8 @@ public class MapFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        DatabaseFacade databaseFacade = DatabaseFacade.getInstance(getActivity());
-        locations = databaseFacade.getAllLocations();
+        LocalDatabaseFacade localDatabaseFacade = LocalDatabaseFacade.getInstance(getActivity());
+        locations = localDatabaseFacade.getAllLocations();
         return inflater.inflate(R.layout.fragment_map, container, false);
     }
 

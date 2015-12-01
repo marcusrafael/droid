@@ -13,9 +13,10 @@ import com.google.android.gms.location.LocationServices;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufpb.ccae.dcx.lcc.tcc.droid.fragment.ChallengeFragment;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.model.Challenge;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.model.Location;
-import br.ufpb.ccae.dcx.lcc.tcc.droid.persistence.DatabaseFacade;
+import br.ufpb.ccae.dcx.lcc.tcc.droid.persistence.LocalDatabaseFacade;
 
 /**
  * Created by xavier on 11/4/15.
@@ -27,12 +28,15 @@ public class LocationAdaptation implements
 
     public static List<Challenge> challenges = new ArrayList<>();
 
+    private android.location.Location currentLocation;
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
     private Context context;
+    private ChallengeFragment challengeFragment;
 
-    public LocationAdaptation(Context context) {
+    public LocationAdaptation(Context context, ChallengeFragment clazz) {
         this.context = context;
+        this.challengeFragment = clazz;
     }
 
     public synchronized void connect() {
@@ -48,7 +52,7 @@ public class LocationAdaptation implements
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(10000);
         mLocationRequest.setFastestInterval(10000);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_LOW_POWER);
     }
 
     private void startLocationUpdate() {
@@ -87,10 +91,12 @@ public class LocationAdaptation implements
 
     public void updateLocations(android.location.Location location) {
 
+        this.currentLocation = location;
+
         challenges.clear();
 
-        DatabaseFacade databaseFacade = DatabaseFacade.getInstance(getContext());
-        List<Location> databaseLocations = databaseFacade.getAllLocations();
+        LocalDatabaseFacade localDatabaseFacade = LocalDatabaseFacade.getInstance(getContext());
+        List<Location> databaseLocations = localDatabaseFacade.getAllLocations();
 
 
         float[] distance = new float[2];
@@ -101,11 +107,13 @@ public class LocationAdaptation implements
 
             if(distance[0] < loc.getRadius()) { // is inside area
 
-                List<Challenge> cs = databaseFacade.getChallengesByLatLong(loc.getLatitude(), loc.getLongitude());
+                List<Challenge> cs = localDatabaseFacade.getChallengesByLatLong(loc.getLatitude(), loc.getLongitude());
                 challenges.addAll(cs);
 
             }
         }
+
+        challengeFragment.update();
     }
 
     public Context getContext() {
@@ -116,4 +124,7 @@ public class LocationAdaptation implements
         this.context = context;
     }
 
+    public android.location.Location getCurrentLocation() {
+        return currentLocation;
+    }
 }

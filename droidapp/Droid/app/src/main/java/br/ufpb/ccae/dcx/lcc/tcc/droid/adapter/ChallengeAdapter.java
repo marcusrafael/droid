@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.ufpb.ccae.dcx.lcc.tcc.droid.R;
@@ -24,9 +25,9 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.Chal
     private RecyclerViewOnClickListener recyclerViewOnClickListener;
 
 
-    public ChallengeAdapter(Context context, List<Challenge> challenges) {
-        this.challenges = challenges;
-        this.layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public ChallengeAdapter(Context context) {
+        challenges = new ArrayList<>();
+        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     public RecyclerViewOnClickListener getRecyclerViewOnClickListener() {
@@ -49,7 +50,7 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.Chal
     public void onBindViewHolder(ChallengeViewHolder holder, int position) {
 
         holder.challenge.setText(challenges.get(position).getDescription());
-        holder.level.setText(String.valueOf(challenges.get(position).getLevel()));
+        holder.level.setText(String.valueOf(challenges.get(position).getDifficulty()));
 
     }
 
@@ -58,6 +59,10 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.Chal
 
         return challenges.size();
 
+    }
+
+    public void setChallenges(List<Challenge> challenges) {
+        this.challenges = challenges;
     }
 
     public class ChallengeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -70,7 +75,7 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.Chal
             super(itemView);
 
             challenge = (TextView) itemView.findViewById(R.id.challenge);
-            level = (TextView) itemView.findViewById(R.id.level);
+            level = (TextView) itemView.findViewById(R.id.difficulty);
 
             itemView.setOnClickListener(this);
 
@@ -84,6 +89,9 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.Chal
             }
         }
     }
+
+
+
 
 
 }

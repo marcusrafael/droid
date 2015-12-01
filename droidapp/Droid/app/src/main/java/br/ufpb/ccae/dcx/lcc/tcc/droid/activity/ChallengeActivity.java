@@ -17,13 +17,14 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.ufpb.ccae.dcx.lcc.tcc.droid.R;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.adapt.BatteryAdaptation;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.model.Answer;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.model.Challenge;
-import br.ufpb.ccae.dcx.lcc.tcc.droid.persistence.DatabaseFacade;
+import br.ufpb.ccae.dcx.lcc.tcc.droid.persistence.LocalDatabaseFacade;
 
 
 public class ChallengeActivity extends ActionBarActivity {
@@ -37,13 +38,14 @@ public class ChallengeActivity extends ActionBarActivity {
     private RadioButton mRadioButtonC;
     private RadioButton mRadioButtonD;
     private Button mOkButton;
-    private List<Answer> mAnswers;
+    private List<Answer> mAnswers = new ArrayList<>();
+    private BatteryAdaptation batteryAdaptation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        BatteryAdaptation batteryAdaptation = new BatteryAdaptation();
+        batteryAdaptation = new BatteryAdaptation();
         this.registerReceiver(batteryAdaptation, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
 
@@ -56,8 +58,9 @@ public class ChallengeActivity extends ActionBarActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         mChallenge = (Challenge) getIntent().getSerializableExtra("CHALLENGE");
-        mAnswers = DatabaseFacade.getInstance(this).getAnswersFromChallenge(mChallenge);
-
+//        mAnswers = LocalDatabaseFacade.getInstance(this).getAnswersFromChallenge(mChallenge);
+        mAnswers.clear();
+        mAnswers.addAll(mChallenge.getAnswers());
 
         mChallengeTextView = (TextView) findViewById(R.id.challenge);
         mChallengeTextView.setText(mChallenge.getDescription());
@@ -168,6 +171,13 @@ public class ChallengeActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        this.unregisterReceiver(batteryAdaptation);
 
     }
 }

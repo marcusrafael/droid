@@ -17,20 +17,20 @@ import br.ufpb.ccae.dcx.lcc.tcc.droid.model.Location;
 /**
  * Created by xavier on 11/4/15.
  */
-public class DatabaseFacade {
+public class LocalDatabaseFacade {
 
-    private static DatabaseFacade instance;
+    private static LocalDatabaseFacade instance;
 
     private DatabaseHelper databaseHelper;
 
 
-    private DatabaseFacade(Context context) {
+    private LocalDatabaseFacade(Context context) {
         databaseHelper = new DatabaseHelper(context);
     }
 
-    public static DatabaseFacade getInstance(Context context) {
+    public static LocalDatabaseFacade getInstance(Context context) {
         if(instance == null) {
-            instance = new DatabaseFacade(context);
+            instance = new LocalDatabaseFacade(context);
         }
         return instance;
     }
