@@ -13,36 +13,55 @@ import android.widget.Toast;
  */
 public class BatteryAdaptation extends BroadcastReceiver {
 
+
+    private static final int LOW_BATTERY = 15;
+    private static final float BATTERY_LEVEL_HIGH = 1.0f;
+    private static final float BATTERY_LEVEL_LOW = 0.1f;
+
     private Context context;
-    private static int LOW_BATTERY = 15;
+    private Intent intent;
+
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
         this.context = context;
+        this.intent = intent;
+        this.adapt();
+    }
 
-        int currentBatteryValue = intent.getIntExtra("level", -1);
-        if (currentBatteryValue <= LOW_BATTERY) {
+    private void increaseScreenBrightnessLevel() {
+
+        changeScreenBrightnessLevel(BATTERY_LEVEL_HIGH);
+
+    }
+
+    private void decreaseScreenBrightnessLevel() {
+
+        changeScreenBrightnessLevel(BATTERY_LEVEL_LOW);
+
+    }
+
+    private void adapt() {
+
+        int batteryLevel = intent.getIntExtra("level", -1);
+
+        if (shouldIncrease(batteryLevel)) {
             decreaseScreenBrightnessLevel();
         } else {
             increaseScreenBrightnessLevel();
         }
 
-        Toast.makeText(context, "BATTERY LEVEL: " + currentBatteryValue + "%", Toast.LENGTH_LONG).show();
-
     }
 
-    public void increaseScreenBrightnessLevel() {
+    private boolean shouldIncrease(int batteryLevel) {
+        return (batteryLevel <= LOW_BATTERY);
+    }
+
+    private void changeScreenBrightnessLevel(float level) {
         Activity activity = (Activity) context;
         WindowManager.LayoutParams layoutParams = activity.getWindow().getAttributes();
-        layoutParams.screenBrightness = 1.0f;
+        layoutParams.screenBrightness = level;
         activity.getWindow().setAttributes(layoutParams);
     }
 
-    public void decreaseScreenBrightnessLevel() {
-        Activity activity = (Activity) context;
-        WindowManager.LayoutParams layoutParams = activity.getWindow().getAttributes();
-        layoutParams.screenBrightness = 0.1f;
-        activity.getWindow().setAttributes(layoutParams);
-    }
 }
