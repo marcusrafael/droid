@@ -40,7 +40,7 @@ public class LocationAdaptation implements
     }
 
     public synchronized void connect() {
-        mGoogleApiClient = new GoogleApiClient.Builder(getContext())
+        mGoogleApiClient = new GoogleApiClient.Builder(context)
                 .addOnConnectionFailedListener(this)
                 .addConnectionCallbacks(this)
                 .addApi(LocationServices.API)
@@ -114,14 +114,6 @@ public class LocationAdaptation implements
         }
 
         challengeFragment.update();
-    }
-
-    public Context getContext() {
-        return context;
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
     }
 
     public android.location.Location getCurrentLocation() {
