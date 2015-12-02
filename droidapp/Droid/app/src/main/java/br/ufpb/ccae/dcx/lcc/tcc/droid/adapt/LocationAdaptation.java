@@ -95,7 +95,7 @@ public class LocationAdaptation implements
 
         challenges.clear();
 
-        LocalDatabaseFacade localDatabaseFacade = LocalDatabaseFacade.getInstance(getContext());
+        LocalDatabaseFacade localDatabaseFacade = LocalDatabaseFacade.getInstance(context);
         List<Location> databaseLocations = localDatabaseFacade.getAllLocations();
 
 
