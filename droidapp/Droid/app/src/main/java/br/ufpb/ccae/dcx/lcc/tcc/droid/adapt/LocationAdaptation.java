@@ -26,6 +26,8 @@ public class LocationAdaptation implements
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
+    private static final long FIVE_MINUTES = 60000;
+    
     public static List<Challenge> challenges = new ArrayList<>();
 
     private android.location.Location currentLocation;
@@ -50,8 +52,8 @@ public class LocationAdaptation implements
 
     private void startRequestForLocationUpdates() {
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(10000);
-        mLocationRequest.setFastestInterval(10000);
+        mLocationRequest.setInterval(FIVE_MINUTES);
+        mLocationRequest.setFastestInterval(FIVE_MINUTES);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_LOW_POWER);
     }
 
