@@ -39,7 +39,7 @@ public class LocationAdaptation implements
         this.challengeFragment = clazz;
     }
 
-    public synchronized void connect() {
+    public synchronized void connectToGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(context)
                 .addOnConnectionFailedListener(this)
                 .addConnectionCallbacks(this)
@@ -48,27 +48,27 @@ public class LocationAdaptation implements
         mGoogleApiClient.connect();
     }
 
-    private void initLocationRequest() {
+    private void startRequestForLocationUpdates() {
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(10000);
         mLocationRequest.setFastestInterval(10000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_LOW_POWER);
     }
 
-    private void startLocationUpdate() {
-        initLocationRequest();
+    private void startGettingLocationUpdates() {
+        startRequestForLocationUpdates();
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest,
                 LocationAdaptation.this);
     }
 
-    private void stopLocationUpdate() {
+    private void stopGettingLocationUpdates() {
         LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, LocationAdaptation.this);
     }
 
     @Override
     public void onConnected(Bundle bundle) {
         Log.d("CONTEXTO:", "onConnected()");
-        startLocationUpdate();
+        startGettingLocationUpdates();
     }
 
     @Override
@@ -113,7 +113,7 @@ public class LocationAdaptation implements
             }
         }
 
-        challengeFragment.update();
+        challengeFragment.updateChallengeListing();
     }
 
     public android.location.Location getCurrentLocation() {

@@ -56,7 +56,7 @@ public class VerifyInternetConnection extends AsyncTask<String, String, Boolean>
         if (result) {
             progressDialog.setMessage("The device is connected to the server!");
         } else {
-            progressDialog.setMessage("Unable to connect the server!");
+            progressDialog.setMessage("Unable to connectToGoogleApiClient the server!");
         }
         progressDialog.show();
         progressDialog.dismiss();

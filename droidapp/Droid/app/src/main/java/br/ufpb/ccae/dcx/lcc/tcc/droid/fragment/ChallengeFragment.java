@@ -64,7 +64,7 @@ public class ChallengeFragment extends Fragment implements RecyclerViewOnClickLi
         mRecyclerView.setLayoutManager(linearLayoutManager);
 
         locationAdaptation = new LocationAdaptation(getActivity(), this);
-        locationAdaptation.connect();
+        locationAdaptation.connectToGoogleApiClient();
 
         VerifyInternetConnection verifyInternetConnection = new VerifyInternetConnection(getContext());
         try {
@@ -111,12 +111,12 @@ public class ChallengeFragment extends Fragment implements RecyclerViewOnClickLi
 
     }
 
-    public void update() {
-        this.updateList(this);
+    public void updateChallengeListing() {
+        this.updateChallengesList(this);
     }
 
 
-    public void updateList(final RecyclerViewOnClickListener recyclerViewOnClickListener) {
+    public void updateChallengesList(final RecyclerViewOnClickListener recyclerViewOnClickListener) {
 
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 

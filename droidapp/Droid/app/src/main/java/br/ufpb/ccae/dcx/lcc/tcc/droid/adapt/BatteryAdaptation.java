@@ -11,7 +11,7 @@ import android.widget.Toast;
 /**
  * Created by xavier on 11/22/15.
  */
-public class BatteryAdaptation extends BroadcastReceiver implements SelfAdaptable {
+public class BatteryAdaptation extends BroadcastReceiver {
 
     private Context context;
     private static int LOW_BATTERY = 15;
@@ -23,25 +23,23 @@ public class BatteryAdaptation extends BroadcastReceiver implements SelfAdaptabl
 
         int currentBatteryValue = intent.getIntExtra("level", -1);
         if (currentBatteryValue <= LOW_BATTERY) {
-            adaptDown();
+            decreaseScreenBrightnessLevel();
         } else {
-            adaptUp();
+            increaseScreenBrightnessLevel();
         }
 
         Toast.makeText(context, "BATTERY LEVEL: " + currentBatteryValue + "%", Toast.LENGTH_LONG).show();
 
     }
 
-    @Override
-    public void adaptUp() {
+    public void increaseScreenBrightnessLevel() {
         Activity activity = (Activity) context;
         WindowManager.LayoutParams layoutParams = activity.getWindow().getAttributes();
         layoutParams.screenBrightness = 1.0f;
         activity.getWindow().setAttributes(layoutParams);
     }
 
-    @Override
-    public void adaptDown() {
+    public void decreaseScreenBrightnessLevel() {
         Activity activity = (Activity) context;
         WindowManager.LayoutParams layoutParams = activity.getWindow().getAttributes();
         layoutParams.screenBrightness = 0.1f;
