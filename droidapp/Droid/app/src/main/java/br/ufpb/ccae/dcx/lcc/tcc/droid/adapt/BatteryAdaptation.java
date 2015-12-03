@@ -43,9 +43,7 @@ public class BatteryAdaptation extends BroadcastReceiver {
 
     private void adapt() {
 
-        int batteryLevel = intent.getIntExtra("level", -1);
-
-        if (shouldIncrease(batteryLevel)) {
+        if (shouldIncreaseScreenBrightness(intent.getIntExtra("level", -1))) {
             decreaseScreenBrightnessLevel();
         } else {
             increaseScreenBrightnessLevel();
@@ -53,7 +51,7 @@ public class BatteryAdaptation extends BroadcastReceiver {
 
     }
 
-    private boolean shouldIncrease(int batteryLevel) {
+    private boolean shouldIncreaseScreenBrightness(int batteryLevel) {
         return (batteryLevel <= LOW_BATTERY);
     }
 
