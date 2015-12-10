@@ -44,9 +44,9 @@ public class BatteryAdaptation extends BroadcastReceiver {
     private void adapt() {
 
         if (shouldIncreaseScreenBrightness(intent.getIntExtra("level", -1))) {
-            decreaseScreenBrightnessLevel();
-        } else {
             increaseScreenBrightnessLevel();
+        } else {
+            decreaseScreenBrightnessLevel();
         }
 
     }
