@@ -144,6 +144,12 @@ public class ChallengeActivity extends ActionBarActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.unregisterReceiver(batteryAdaptation);
+    }
+
     public void resetRadioButtons() {
 
         if(mRadioButtonA != null) mRadioButtonA.setChecked(false);
@@ -174,10 +180,6 @@ public class ChallengeActivity extends ActionBarActivity {
 
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        this.unregisterReceiver(batteryAdaptation);
 
-    }
+
 }

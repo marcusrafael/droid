@@ -62,6 +62,12 @@ public class DroidActivity extends AppCompatActivity implements NavigationView.O
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.unregisterReceiver(batteryAdaptation);
+    }
+
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {

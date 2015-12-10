@@ -2,6 +2,8 @@ package br.ufpb.ccae.dcx.lcc.tcc.droid.async;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 
 import java.io.IOException;
@@ -33,13 +35,29 @@ public class VerifyInternetConnection extends AsyncTask<String, String, Boolean>
     protected Boolean doInBackground(String... params) {
 
         try {
-            URL url = new URL(params[0]);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            return (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK);
-        } catch (IOException e) {
+
+            if(isNetworkReachable()) {
+
+                URL url = new URL(params[0]);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                return (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK);
+
+            }
+
+        } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
+
         return false;
+
+    }
+
+    private Boolean isNetworkReachable() {
+
+        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return (activeNetwork != null && activeNetwork.isConnectedOrConnecting());
 
     }
 
