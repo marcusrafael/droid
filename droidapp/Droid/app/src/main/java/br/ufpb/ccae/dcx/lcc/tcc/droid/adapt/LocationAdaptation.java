@@ -13,6 +13,7 @@ import com.google.android.gms.location.LocationServices;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufpb.ccae.dcx.lcc.tcc.droid.adapter.ChallengeAdapter;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.fragment.ChallengeFragment;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.model.Challenge;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.model.Location;
@@ -26,17 +27,17 @@ public class LocationAdaptation implements
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
-    public static List<Challenge> challenges = new ArrayList<>();
+    private Context context;
 
     private android.location.Location currentLocation;
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
-    private Context context;
+
     private ChallengeFragment challengeFragment;
 
-    public LocationAdaptation(Context context, ChallengeFragment clazz) {
+    public LocationAdaptation(Context context, ChallengeFragment challengeFragment) {
         this.context = context;
-        this.challengeFragment = clazz;
+        this.challengeFragment = challengeFragment;
     }
 
     public synchronized void connect() {
@@ -91,13 +92,10 @@ public class LocationAdaptation implements
 
     public void updateLocations(android.location.Location location) {
 
-        this.currentLocation = location;
-
-        challenges.clear();
+        this.challengeFragment.getChallenges().clear();
 
         LocalDatabaseFacade localDatabaseFacade = LocalDatabaseFacade.getInstance(getContext());
         List<Location> databaseLocations = localDatabaseFacade.getAllLocations();
-
 
         float[] distance = new float[2];
         for(Location loc : databaseLocations) {
@@ -108,12 +106,15 @@ public class LocationAdaptation implements
             if(distance[0] < loc.getRadius()) { // is inside area
 
                 List<Challenge> cs = localDatabaseFacade.getChallengesByLatLong(loc.getLatitude(), loc.getLongitude());
-                challenges.addAll(cs);
+                this.challengeFragment.getChallenges().addAll(cs);
 
             }
         }
 
-        challengeFragment.update();
+        this.challengeFragment.mChallengeAdapter.setChallenges(this.challengeFragment.getChallenges());
+        this.challengeFragment.mChallengeAdapter.notifyDataSetChanged();
+        this.challengeFragment.mRecyclerView.setAdapter(this.challengeFragment.mChallengeAdapter);
+
     }
 
     public Context getContext() {

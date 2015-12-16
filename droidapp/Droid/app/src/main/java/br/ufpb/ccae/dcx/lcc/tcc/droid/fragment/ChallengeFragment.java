@@ -40,53 +40,132 @@ import br.ufpb.ccae.dcx.lcc.tcc.droid.util.RecyclerViewOnClickListener;
 public class ChallengeFragment extends Fragment implements RecyclerViewOnClickListener {
 
 
-    private List<Challenge> challenges;
+    private List<Challenge> challenges = new ArrayList<>();
 
-    private LinearLayoutManager linearLayoutManager;
-    private RecyclerView  mRecyclerView;
-    private LocationAdaptation locationAdaptation;
-    private ChallengeAdapter mChallengeAdapter;
+    public LinearLayoutManager linearLayoutManager;
+    public RecyclerView  mRecyclerView;
+    public LocationAdaptation locationAdaptation;
+    public ChallengeAdapter mChallengeAdapter;
+
+    private RequestQueue queue;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         setHasOptionsMenu(true);
-
-        this.challenges = new ArrayList<>();
-
         View view = inflater.inflate(R.layout.fragment_challenge, container, false);
-
-
         linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(linearLayoutManager);
+        mChallengeAdapter = new ChallengeAdapter(getContext());
+        mChallengeAdapter.setChallenges(challenges);
+        mRecyclerView.setAdapter(mChallengeAdapter);
+        mChallengeAdapter.setRecyclerViewOnClickListener(this);
+        queue = Volley.newRequestQueue(getActivity());
 
-        locationAdaptation = new LocationAdaptation(getActivity(), this);
-        locationAdaptation.connect();
-
-        VerifyInternetConnection verifyInternetConnection = new VerifyInternetConnection(getContext());
-        try {
-            Boolean isConnected = verifyInternetConnection.execute(DroidURL.DROID_API_URL).get();
-
-            if( ! isConnected ) { // executes when connected to the server
-                this.challenges = LocalDatabaseFacade.getInstance(getContext()).getAllChallenges();
-                mChallengeAdapter = new ChallengeAdapter(getContext());
-                mChallengeAdapter.setChallenges(challenges);
-                mRecyclerView.setAdapter(mChallengeAdapter);
-                mChallengeAdapter.setRecyclerViewOnClickListener(this);
-            }
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        updateRecyclerView();
 
         return view;
 
     }
+
+
+    public void updateRecyclerView() {
+
+        VerifyInternetConnection verifyInternetConnection = new VerifyInternetConnection(getContext());
+
+        try {
+
+            Boolean isConnected = verifyInternetConnection.execute(DroidURL.DROID_API_URL).get();
+
+            if( isConnected ) { // executes when connected to the server
+
+                updateFromRemoteDatabase();
+
+            } else {
+
+                updateFromLocalDatabase();
+
+            }
+
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateFromLocalDatabase() {
+
+        locationAdaptation = new LocationAdaptation(getActivity(), this);
+        locationAdaptation.connect();
+
+    }
+
+    public void updateFromRemoteDatabase() {
+
+        Response.Listener<JSONArray> responseListener = new Response.Listener<JSONArray>() {
+
+            @Override
+            public void onResponse(JSONArray response) {
+
+                challenges.clear();
+
+                Log.d("CONTEXTO:", response.toString());
+
+                for (int i = 0; i < response.length(); i++) {
+
+                    try {
+
+                        float[] distance = new float[2];
+
+
+                        Challenge challenge = new Gson().fromJson(response.getJSONObject(i).toString(), Challenge.class);
+
+//                        android.location.Location.distanceBetween(locationAdaptation.getCurrentLocation().getLatitude(), locationAdaptation.getCurrentLocation().getLongitude(),
+//                                challenge.getLocation().getLatitude(), challenge.getLocation().getLongitude(), distance);
+
+                        double radius = challenge.getLocation().getRadius();
+                        Log.d("RADIUS:", String.valueOf(radius));
+
+                        if(distance[0] < radius) { // is inside area
+
+                            challenges.add(challenge);
+
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                mChallengeAdapter.setChallenges(challenges);
+                mChallengeAdapter.notifyDataSetChanged();
+                mRecyclerView.setAdapter(mChallengeAdapter);
+
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) { }
+
+        };
+
+        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                DroidURL.DROID_API_CHALLENGES_URL,
+                responseListener,
+                errorListener);
+
+        queue.add(jsonObjectRequest);
+        queue.start();
+
+    }
+
 
     @Override
     public void onResume() {
@@ -111,71 +190,8 @@ public class ChallengeFragment extends Fragment implements RecyclerViewOnClickLi
 
     }
 
-    public void update() {
-        this.updateList(this);
+    public List<Challenge> getChallenges() {
+        return challenges;
     }
 
-
-    public void updateList(final RecyclerViewOnClickListener recyclerViewOnClickListener) {
-
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
-
-        Response.Listener<JSONArray> responseListener = new Response.Listener<JSONArray>() {
-
-            @Override
-            public void onResponse(JSONArray response) {
-
-                Log.d("CONTEXTO:", response.toString());
-
-                challenges.clear();
-
-                for (int i = 0; i < response.length(); i++) {
-
-                    try {
-
-                        float[] distance = new float[2];
-
-
-                        Challenge challenge = new Gson().fromJson(response.getJSONObject(i).toString(), Challenge.class);
-
-                        android.location.Location.distanceBetween(locationAdaptation.getCurrentLocation().getLatitude(), locationAdaptation.getCurrentLocation().getLongitude(),
-                                challenge.getLocation().getLatitude(), challenge.getLocation().getLongitude(), distance);
-
-                        double radius = challenge.getLocation().getRadius();
-                        Log.d("RADIUS:", String.valueOf(radius));
-
-                        if(distance[0] < radius) { // is inside area
-
-                            challenges.add(challenge);
-
-                        }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-                mChallengeAdapter = new ChallengeAdapter(getContext());
-                mChallengeAdapter.setChallenges(challenges);
-                mRecyclerView.setAdapter(mChallengeAdapter);
-                mChallengeAdapter.setRecyclerViewOnClickListener(recyclerViewOnClickListener);
-            }
-        };
-
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) { }
-
-        };
-
-        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(
-                Request.Method.GET,
-                DroidURL.DROID_API_CHALLENGES_URL,
-                responseListener,
-                errorListener);
-
-        queue.add(jsonObjectRequest);
-        queue.start();
-    }
 }
