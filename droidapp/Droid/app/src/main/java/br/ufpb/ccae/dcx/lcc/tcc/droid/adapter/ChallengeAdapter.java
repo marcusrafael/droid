@@ -65,6 +65,10 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.Chal
         this.challenges = challenges;
     }
 
+    public List<Challenge> getChallenges() {
+        return challenges;
+    }
+
     public class ChallengeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView challenge;

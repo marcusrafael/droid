@@ -2,6 +2,7 @@ package br.ufpb.ccae.dcx.lcc.tcc.droid.adapt;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -12,6 +13,7 @@ import com.google.android.gms.location.LocationServices;
 
 import java.util.List;
 
+import br.ufpb.ccae.dcx.lcc.tcc.droid.adapter.ChallengeAdapter;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.fragment.ChallengeFragment;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.model.Challenge;
 import br.ufpb.ccae.dcx.lcc.tcc.droid.model.Location;
@@ -25,19 +27,24 @@ public class LocationAdaptation implements
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
+
     private static final long FIVE_MINUTES = 300;
 
     private Context context;
+    private RecyclerView recyclerView;
+    private ChallengeAdapter adapter;
+    private List<Challenge> challenges;
 
     private android.location.Location currentLocation;
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
 
-    private ChallengeFragment challengeFragment;
 
-    public LocationAdaptation(Context context, ChallengeFragment challengeFragment) {
+    public LocationAdaptation(Context context, RecyclerView recyclerView) {
         this.context = context;
-        this.challengeFragment = challengeFragment;
+        this.recyclerView = recyclerView;
+        this.adapter = (ChallengeAdapter) recyclerView.getAdapter();
+        this.challenges = adapter.getChallenges();
     }
 
     public synchronized void connect() {
@@ -92,7 +99,7 @@ public class LocationAdaptation implements
 
     public void updateLocations(android.location.Location location) {
 
-        this.challengeFragment.getChallenges().clear();
+        this.challenges.clear();
 
         LocalDatabaseFacade localDatabaseFacade = LocalDatabaseFacade.getInstance(getContext());
         List<Location> databaseLocations = localDatabaseFacade.getAllLocations();
@@ -106,15 +113,16 @@ public class LocationAdaptation implements
             if(distance[0] < loc.getRadius()) { // is inside area
 
                 List<Challenge> cs = localDatabaseFacade.getChallengesByLatLong(loc.getLatitude(), loc.getLongitude());
-                this.challengeFragment.getChallenges().addAll(cs);
+                this.challenges.addAll(cs);
 
             }
         }
 
-        this.challengeFragment.mChallengeAdapter.setChallenges(this.challengeFragment.getChallenges());
-        this.challengeFragment.mChallengeAdapter.notifyDataSetChanged();
-        this.challengeFragment.mRecyclerView.setAdapter(this.challengeFragment.mChallengeAdapter);
-
+        this.adapter.setChallenges(this.challenges);
+        this.adapter.notifyDataSetChanged();
+        this.recyclerView.setAdapter(this.adapter);
+        this.stopLocationUpdate();
+        this.mGoogleApiClient.disconnect();
     }
 
     public Context getContext() {
@@ -125,7 +133,5 @@ public class LocationAdaptation implements
         this.context = context;
     }
 
-    public android.location.Location getCurrentLocation() {
-        return currentLocation;
-    }
+
 }
